@@ -1,4 +1,6 @@
-import React from "react";
+import React, {SyntheticEvent, useState} from "react";
+// import React, {ChangeEvent, useState, FC} from "react";
+
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
@@ -54,6 +56,7 @@ type Inputs = {
   password: string;
 };
 
+
 const schema = yup.object().shape({
   email: yup
     .string()
@@ -61,16 +64,30 @@ const schema = yup.object().shape({
     .required("Это поле обязательно для заполнения"),
   password: yup
     .string()
-    .matches(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/, "Пароль должен состоять из восьми и более символов: минимум одну цифру, одну заглавную и строчную букву")
+    .matches(/(.*?).{8,}/, "Пароль должен состоять минимум из восьми символов")
     .required("Это поле обязательно для заполнения"),
 });
 
-export default function SignIn() {
+// export const SignIn: FC = ({onChange}) => {
+  export const SignIn = () => {
+
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+
   const classes = useStyles();
 
   const { register, handleSubmit, formState: { errors }} = useForm<Inputs>({resolver: yupResolver(schema)
   });
   const onSubmit = handleSubmit(data => console.log(data));
+
+  const changeHandlerEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+  }
+
+  // const changeHandlerPassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setPassword(event.target.value)
+  // }
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -83,10 +100,11 @@ export default function SignIn() {
           Авторизация
         </Typography>
         <form onSubmit={onSubmit} className={classes.form} noValidate>
+        {/* <form onSubmit={submit} className={classes.form} noValidate> */}
           <TextField
-            // ref = {...register("email", { required: true })}
-            // {...register({required: true})}
+            value={email}
             {...register("email", {required: true})}
+            onChange={e => setEmail(e.target.value)}
             variant="outlined"
             margin="normal"
             required
@@ -94,15 +112,15 @@ export default function SignIn() {
             id="email"
             label="Email"
             name="email"
+            type="email"
             autoComplete="email"
             autoFocus
           />
-            {/* {errors.email && <span>Это поле обязательно для заполнения</span>} */}
             {errors.email?.message}
           <TextField
-            // ref = {...register("password", { required: true })}
-            // {...register({required: true})}
+            // value={password}
             {...register("password", {required: true})}
+            onChange={e => setPassword(e.target.value)}
             variant="outlined"
             margin="normal"
             required
@@ -112,7 +130,6 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"/>
-            {/* {errors.password && <span>Это поле обязательно для заполнения </span>} */}
             {errors.password?.message}
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -147,3 +164,5 @@ export default function SignIn() {
     </Container>
   );
 }
+
+export default SignIn;
