@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/testTaskSignInForm/static/css/main.6dea0f05.chunk.css",
-    "main.js": "/testTaskSignInForm/static/js/main.e91a2746.chunk.js",
-    "main.js.map": "/testTaskSignInForm/static/js/main.e91a2746.chunk.js.map",
+    "main.js": "/testTaskSignInForm/static/js/main.db9adbda.chunk.js",
+    "main.js.map": "/testTaskSignInForm/static/js/main.db9adbda.chunk.js.map",
     "runtime-main.js": "/testTaskSignInForm/static/js/runtime-main.54ff266f.js",
     "runtime-main.js.map": "/testTaskSignInForm/static/js/runtime-main.54ff266f.js.map",
-    "static/js/2.415f4094.chunk.js": "/testTaskSignInForm/static/js/2.415f4094.chunk.js",
-    "static/js/2.415f4094.chunk.js.map": "/testTaskSignInForm/static/js/2.415f4094.chunk.js.map",
+    "static/js/2.66b73e59.chunk.js": "/testTaskSignInForm/static/js/2.66b73e59.chunk.js",
+    "static/js/2.66b73e59.chunk.js.map": "/testTaskSignInForm/static/js/2.66b73e59.chunk.js.map",
     "static/js/3.c68c4890.chunk.js": "/testTaskSignInForm/static/js/3.c68c4890.chunk.js",
     "static/js/3.c68c4890.chunk.js.map": "/testTaskSignInForm/static/js/3.c68c4890.chunk.js.map",
     "index.html": "/testTaskSignInForm/index.html",
     "static/css/main.6dea0f05.chunk.css.map": "/testTaskSignInForm/static/css/main.6dea0f05.chunk.css.map",
-    "static/js/2.415f4094.chunk.js.LICENSE.txt": "/testTaskSignInForm/static/js/2.415f4094.chunk.js.LICENSE.txt"
+    "static/js/2.66b73e59.chunk.js.LICENSE.txt": "/testTaskSignInForm/static/js/2.66b73e59.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.54ff266f.js",
-    "static/js/2.415f4094.chunk.js",
+    "static/js/2.66b73e59.chunk.js",
     "static/css/main.6dea0f05.chunk.css",
-    "static/js/main.e91a2746.chunk.js"
+    "static/js/main.db9adbda.chunk.js"
   ]
 }
