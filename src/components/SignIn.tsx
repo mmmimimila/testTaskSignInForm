@@ -1,7 +1,5 @@
 import React, {SyntheticEvent, useState} from "react";
-// import React, {ChangeEvent, useState, FC} from "react";
-
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import Avatar from '@material-ui/core/Avatar';
@@ -17,6 +15,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import axios from "axios";
 
 function Copyright() {
   return (
@@ -68,7 +67,6 @@ const schema = yup.object().shape({
     .required("Это поле обязательно для заполнения"),
 });
 
-// export const SignIn: FC = ({onChange}) => {
   export const SignIn = () => {
 
   const [email, setEmail] = useState<string>('');
@@ -78,16 +76,52 @@ const schema = yup.object().shape({
 
   const { register, handleSubmit, formState: { errors }} = useForm<Inputs>({resolver: yupResolver(schema)
   });
-  const onSubmit = handleSubmit(data => console.log(data));
+  const onSubmit: SubmitHandler<FormValues> = data => console.log(data);
 
   const changeHandlerEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   }
 
-  // const changeHandlerPassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setPassword(event.target.value)
+  const changeHandlerPassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value)
+  }
+
+  // const data = {
+  //   email,
+  //   password,
+  //   "personal_data_access": true
   // }
 
+  // axios.post('login', data).then(function (res) {
+  //   localStorage.setItem('acess_token', JSON.stringify(res.token));
+  // })
+  // .catch(function (error) {
+  //   console.log(error);
+  // });
+
+  axios({
+    method: 'post',
+    url: 'login',
+    headers: {'Authorization': 'Bearer <token>'},
+    data: {
+      email,
+      password,
+      "personal_data_access": true
+    }
+  }).then(function (res) {
+      localStorage.setItem('token', JSON.stringify(res.token));
+      // localStorage.setItem('acess_token', res.data.token);
+    })
+    .catch(function (err) {
+      console.log(err);
+  });
+  
+  // try {
+  //   const response = await axios.post('http://demo0725191.mockable.io/post_data', { posted_data: 'example' });
+  //   console.log('👉 Returned data:', response);
+  // } catch (e) {
+  //   console.log(`😱 Axios request failed: ${e}`);
+  // }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -99,12 +133,11 @@ const schema = yup.object().shape({
         <Typography component="h1" variant="h5">
           Авторизация
         </Typography>
-        <form onSubmit={onSubmit} className={classes.form} noValidate>
-        {/* <form onSubmit={submit} className={classes.form} noValidate> */}
+        <form onSubmit={handleSubmit(onSubmit)} className={classes.form} noValidate>
           <TextField
             value={email}
             {...register("email", {required: true})}
-            onChange={e => setEmail(e.target.value)}
+            onChange={changeHandlerEmail}
             variant="outlined"
             margin="normal"
             required
@@ -118,9 +151,9 @@ const schema = yup.object().shape({
           />
             {errors.email?.message}
           <TextField
-            // value={password}
+            value={password}
             {...register("password", {required: true})}
-            onChange={e => setPassword(e.target.value)}
+            onChange={changeHandlerPassword}
             variant="outlined"
             margin="normal"
             required
