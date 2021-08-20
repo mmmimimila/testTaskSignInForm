@@ -15,7 +15,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {useHistory, Redirect} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import axios from "axios";
 
 function Copyright() {
@@ -90,8 +90,7 @@ const schema = yup.object().shape({
         'Content-Type': 'application/json'
     }
     }).then(function (res) {
-        localStorage.setItem('token', JSON.stringify(res.data.access_token));
-        <Redirect to='/devicesList'/>
+        localStorage.setItem('token', res.data.data.access_token);
         history.push('/devicesList');
         console.log(res);
       })
