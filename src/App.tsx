@@ -1,7 +1,7 @@
 import React from 'react';
 import SignIn from './components/SignIn';
 import DevicesList from './components/DevicesList';
-import {BrowserRouter, Switch, Route} from "react-router-dom";
+import {BrowserRouter, Switch, Route, Redirect} from "react-router-dom";
 
 
 function App() {
@@ -9,8 +9,9 @@ function App() {
     <>
     <BrowserRouter>
       <Switch>
-        <Route path="/login" component={() => <SignIn/>}/>
-        <Route path="/devicesList" component={() => <DevicesList/>}/>
+        <Redirect exact from="/" to="/login"/>
+        <Route exact path="/login" component={() => <SignIn/>}/>
+        <Route exact path="/devicesList" component={() => <DevicesList/>}/>
       </Switch>
     </BrowserRouter>
     </>

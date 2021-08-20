@@ -15,6 +15,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import {useHistory, Redirect} from "react-router-dom";
 import axios from "axios";
 
 function Copyright() {
@@ -71,12 +72,36 @@ const schema = yup.object().shape({
 
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [apiErrors, setApiErrors] = useState<string[]>([]);
 
   const classes = useStyles();
 
+  const history = useHistory();
+
   const { register, handleSubmit, formState: { errors }} = useForm<Inputs>({resolver: yupResolver(schema)
   });
-  const onSubmit: SubmitHandler<FormValues> = data => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> =  (data: {email: string; password: string}) => {
+    console.log(data);
+    axios({
+      method: 'post',
+      url: 'https://core.nekta.cloud/api/auth/login ',
+      data: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json'
+    }
+    }).then(function (res) {
+        localStorage.setItem('token', JSON.stringify(res.data.access_token));
+        <Redirect to='/devicesList'/>
+        history.push('/devicesList');
+        console.log(res);
+      })
+      .catch(function (err) {
+        console.log('error', err.response.data.error.data.msg);
+        setApiErrors([err.response.data.error.data.msg]);
+        console.dir(err);
+    });
+}
+
 
   const changeHandlerEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -85,43 +110,6 @@ const schema = yup.object().shape({
   const changeHandlerPassword = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value)
   }
-
-  // const data = {
-  //   email,
-  //   password,
-  //   "personal_data_access": true
-  // }
-
-  // axios.post('login', data).then(function (res) {
-  //   localStorage.setItem('acess_token', JSON.stringify(res.token));
-  // })
-  // .catch(function (error) {
-  //   console.log(error);
-  // });
-
-  axios({
-    method: 'post',
-    url: 'login',
-    headers: {'Authorization': 'Bearer <token>'},
-    data: {
-      email,
-      password,
-      "personal_data_access": true
-    }
-  }).then(function (res) {
-      localStorage.setItem('token', JSON.stringify(res.token));
-      // localStorage.setItem('acess_token', res.data.token);
-    })
-    .catch(function (err) {
-      console.log(err);
-  });
-  
-  // try {
-  //   const response = await axios.post('http://demo0725191.mockable.io/post_data', { posted_data: 'example' });
-  //   console.log('👉 Returned data:', response);
-  // } catch (e) {
-  //   console.log(`😱 Axios request failed: ${e}`);
-  // }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -164,6 +152,7 @@ const schema = yup.object().shape({
             id="password"
             autoComplete="current-password"/>
             {errors.password?.message}
+            {apiErrors.map(error => <div>{error}</div>)}
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Запомнить"
