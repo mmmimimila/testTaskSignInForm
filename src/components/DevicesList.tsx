@@ -25,7 +25,7 @@ export const DevicesList = () => {
   useEffect(() => {
     const token: any = localStorage.getItem("token");
     if (!token) {
-      history.push("/login");
+      history.push("/testTaskSignInForm");
     } else {
       axios({
         method: "post",
@@ -47,7 +47,6 @@ export const DevicesList = () => {
         },
       })
         .then(function (res) {
-          console.log("response", res.data.data.metering_devices.data);
           setDevices(res.data.data.metering_devices.data);
         })
         .catch(function (err) {
@@ -57,6 +56,7 @@ export const DevicesList = () => {
   }, [history]);
 
   const classes = useStyles();
+
 
   return (
     <>
@@ -79,7 +79,16 @@ export const DevicesList = () => {
                     {device.id}
                     </TableCell>
                     <TableCell align="right">{device.name}</TableCell>
-                    <TableCell align="right">{device.last_active}</TableCell>
+                    <TableCell align="right">{[device.last_active].map(timestamp => {
+                      const a = new Date(timestamp * 1000);
+                      const year = a.getFullYear();
+                      const month = (a.getMonth()+1) < 10 ? (`0${a.getMonth()+1}`) : (a.getMonth()+1);
+                      const date = a.getDate() < 10 ? '0' + a.getDate() : a.getDate();
+                      const hour = a.getHours() < 10 ? '0' + a.getHours() : a.getHours();
+                      const min = a.getMinutes() < 10 ? '0' + a.getMinutes() : a.getMinutes();
+                      const formatDate = `${date}.${month}.${year} ${hour}:${min}`;
+                      return formatDate;
+                    })}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

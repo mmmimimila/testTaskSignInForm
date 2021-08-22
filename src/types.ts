@@ -19,7 +19,7 @@ export interface InterfaceDevice {
   impulse_weight: null
   inside_addr: string;
   interface_id: number;
-  last_active: number;
+  last_active: number | string;
   last_message: {tariff1: number; tariff2: number; tariff3: number; datetime: number; realdatetime: number;}
   last_message_type: null
   model_class_id: number;

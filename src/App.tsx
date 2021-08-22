@@ -9,8 +9,8 @@ function App() {
     <>
     <BrowserRouter>
       <Switch>
-        <Redirect exact from="/" to="/login"/>
-        <Route exact path="/login" component={() => <SignIn/>}/>
+        <Redirect exact from="/" to="/testTaskSignInForm"/>
+        <Route exact path="/testTaskSignInForm" component={() => <SignIn/>}/>
         <Route exact path="/devicesList" component={() => <DevicesList/>}/>
       </Switch>
     </BrowserRouter>
