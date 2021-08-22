@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/testTaskSignInForm/static/css/main.6dea0f05.chunk.css",
-    "main.js": "/testTaskSignInForm/static/js/main.8d085ac2.chunk.js",
-    "main.js.map": "/testTaskSignInForm/static/js/main.8d085ac2.chunk.js.map",
+    "main.js": "/testTaskSignInForm/static/js/main.e3bcf27c.chunk.js",
+    "main.js.map": "/testTaskSignInForm/static/js/main.e3bcf27c.chunk.js.map",
     "runtime-main.js": "/testTaskSignInForm/static/js/runtime-main.c165d13e.js",
     "runtime-main.js.map": "/testTaskSignInForm/static/js/runtime-main.c165d13e.js.map",
     "static/js/2.d610ad42.chunk.js": "/testTaskSignInForm/static/js/2.d610ad42.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.c165d13e.js",
     "static/js/2.d610ad42.chunk.js",
     "static/css/main.6dea0f05.chunk.css",
-    "static/js/main.8d085ac2.chunk.js"
+    "static/js/main.e3bcf27c.chunk.js"
   ]
 }
